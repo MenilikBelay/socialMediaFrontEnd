@@ -9,9 +9,7 @@ import { AuthData } from "./auth-data.model";
 export class AuthService {
   private isAuthenticated = false;
   private token: string;
-
   private userId: string;
-
   private tokenTimer: any;
   private authStatusListener = new Subject<boolean>();
   private baseUrl = "http://localhost:3000/";
@@ -33,15 +31,12 @@ export class AuthService {
 
   // SIGNUP
   createUser(authData: AuthData) {
-    console.log(authData);
+    // console.log(authData);
     this.http
-      .post(this.baseUrl + "users/add-user", authData, {
-        headers: { skip: "true" },
-      })
-      .subscribe((response) => {
-        console.log(response);
-
-        this.router.navigate(["/"]);
+      .post(this.baseUrl+ "users/add-user", authData,{headers:{skip:"true"}})
+      .subscribe(response => {
+        //console.log(response);
+        this.router.navigate(['/home']);
       });
   }
   //this.http.get(url, {headers:{skip:"true"});
@@ -58,7 +53,7 @@ export class AuthService {
       .subscribe((response) => {
         const token = response.token;
         const userId = response.userId;
-        console.log(response.userId);
+       // console.log(response.userId);
         this.token = token;
         if (token) {
           const expiresInDuration = response.expiresIn;
@@ -70,10 +65,9 @@ export class AuthService {
           const expirationDate = new Date(
             now.getTime() + expiresInDuration * 1000
           );
-          console.log(expirationDate);
-
-          this.saveAuthData(token, expirationDate, userId);
-          this.router.navigate(["/"]);
+          // console.log(expirationDate);
+          this.saveAuthData(token, expirationDate,userId); 
+          this.router.navigate(["/home"]);
         }
       });
   }
@@ -108,7 +102,7 @@ export class AuthService {
     console.log("Setting timer: " + duration);
     this.tokenTimer = setTimeout(() => {
       this.logout();
-    }, duration * 1000);
+    }, duration * 1000); 
   }
 
   //STORE THE TOKEN TO LOCAL STORAGE

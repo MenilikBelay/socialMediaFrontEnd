@@ -9,7 +9,7 @@ import { NgForm } from '@angular/forms';
     '../../../css/responsive.css', '../../../css/style.css',
     '../../../css/strip.css']
 })
-export class LoginComponent{
+export class LoginComponent  {
 
     constructor(private authService: AuthService){}
     onLogin(loginForm: NgForm){
@@ -22,7 +22,7 @@ export class LoginComponent{
     }
 
     onSignup(signupForm: NgForm){
-
+ 
         if (signupForm.invalid) {
             return;
         }
