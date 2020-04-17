@@ -1,0 +1,6 @@
+<div>
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <input type="text" name="word" id="word" [(ngModel)]="word" required />
+    <button type="submit">Add</button>
+  </form>
+</div>

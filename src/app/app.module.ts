@@ -23,6 +23,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';  
 import { AppComponent } from './app.component';
 import { Error404Component } from './error404/err404.component';
+import { AdminModule } from "./admin/admin.module";
 
 @NgModule({
   declarations: [
@@ -38,7 +39,6 @@ import { Error404Component } from './error404/err404.component';
     LoginComponent,
     EditProfileComponent,
     Error404Component
-
   ],
   imports: [
     BrowserModule,
@@ -52,8 +52,11 @@ import { Error404Component } from './error404/err404.component';
     ReactiveFormsModule,
     MatPaginatorModule,
     CommonModule,
+    AdminModule,
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
-  bootstrap: [AppComponent]
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
