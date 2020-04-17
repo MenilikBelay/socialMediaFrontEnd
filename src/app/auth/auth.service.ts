@@ -11,8 +11,6 @@ export class AuthService {
   private isAuthenticated = false;
   private token: string;
 
-  private userId:string;
-
   private tokenTimer: any;
   private userId: string;
   private authStatusListener = new Subject<boolean>();
@@ -29,9 +27,7 @@ getUserId(){
   getIsAuth() {
     return this.isAuthenticated;
   }
-  getUserId() {
-    return this.userId;
-  }
+  
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
   }
@@ -43,9 +39,9 @@ getUserId(){
       .post(this.baseUrl+ "users/add-user", authData,{headers:{skip:"true"}})
       .subscribe(response => {
 
-        console.log(response);
+        //console.log(response);
 
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       });
   }
   //this.http.get(url, {headers:{skip:"true"});
@@ -60,7 +56,7 @@ getUserId(){
       .subscribe(response => {
         const token = response.token; 
         const userId = response.userId;
-        console.log(response.userId);
+       // console.log(response.userId);
         this.token = token;
         if (token) {
           const expiresInDuration = response.expiresIn;
@@ -72,8 +68,8 @@ getUserId(){
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
           console.log(expirationDate);
 
-          this.saveAuthData(token, expirationDate,userId);
-          this.router.navigate(["/"]);
+          this.saveAuthData(token, expirationDate,userId); 
+          this.router.navigate(["/home"]);
         }
       });
   }
@@ -108,7 +104,7 @@ getUserId(){
     console.log('Setting timer: ' + duration);
     this.tokenTimer = setTimeout(() => {
       this.logout();
-    }, duration * 1000);
+    }, duration * 1000); 
   }
 
 

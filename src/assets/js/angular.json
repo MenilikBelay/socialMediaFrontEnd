@@ -24,7 +24,8 @@
               "src/assets",
               "src/images",
               "src/fonts",
-              "src/js"
+              "src/js",
+              "./node_modules/jquery/dist"
 
             ],
             "styles": [
@@ -34,14 +35,13 @@
               "src/css/main.min.css"
             ],
             "scripts": [
-              "./node_modules/jquery/dist/jquery.min.js",
+              "node_modules/jquery/dist/jquery.min.js",
               "src/assets/js/backgroundVideo.js",
               "src/assets/js/strip.pkgd.min.js",
               "src/assets/js/script.js",
               "src/assets/js/main.min.js",
               "src/assets/js/map-init.js",
-
-              "./node_modules/bootstrap/dist/js/bootstrap.js"
+              "node_modules/bootstrap/dist/js/bootstrap.js"
 
             ]
           },

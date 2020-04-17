@@ -14,11 +14,10 @@ export class ProfileService {
         return this.http.get<ApiResponse>(this.baseUrl + id);
       }
 
-    updateUser(user){
-        console.log("UPDATE STARTED: INDIDE SERVICE"); 
-        console.log(this.baseUrl +'edit-user'+user._id); 
+      updateUser(user): Observable<ApiResponse> {
 
-        return this.http.put(this.baseUrl +'edit-user'+user._id, user);
+        console.log(this.baseUrl +'edit-user/'+user._id); 
+        const baseUrl2  = this.baseUrl +'edit-user/';
+        return this.http.put<ApiResponse>(baseUrl2+user._id, user);
       }
-
 }

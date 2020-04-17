@@ -1,8 +1,13 @@
-import { ProfileService } from './../edit-profile/profile.service';
+import { PostService } from './../services/post.service';
+import { PostSearchComponent } from './../post-search/post-search.component';
+import { ApiResponse } from './../edit-profile/api.response';
+import { PostSearchService } from './../post-search/post-search.service';
 import { AuthService } from './../auth/auth.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription } from "rxjs";
-import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
+import { Router, NavigationEnd } from "@angular/router";
+
 @Component({
   selector: 'app-topbar',
   templateUrl: './topbar.component.html',
@@ -10,12 +15,20 @@ import { Router } from '@angular/router';
     '../../css/responsive.css', '../../css/style.css',
     '../../css/strip.css']
 })
-export class TopbarComponent implements OnInit {
+export class TopbarComponent implements OnInit, OnDestroy {
 
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
+  postsQuery = new FormControl("");
+  userId = window.localStorage.getItem("userId");
+  @Output() searchPostEvent = new EventEmitter();
 
-  constructor(private router: Router, private authService:AuthService, private profileService:ProfileService) { }
+
+
+  constructor(private router: Router, private authService:AuthService, 
+              private postSearchService:PostSearchService,
+              ) {            }
+
   onLogout(event){
     event.preventDefault(); // Prevents browser following the link
     this.authService.logout();
@@ -23,8 +36,22 @@ export class TopbarComponent implements OnInit {
 
 onEditProfile(event){
   event.preventDefault(); // Prevents browser following the link
-  this.router.navigate(["/edit-profile"]);
+  this.router.navigate(["/home/edit-profile"]);
 }
+
+onHomeClick(event){
+  event.preventDefault(); // Prevents browser following the link
+  this.router.navigate(["/home"]);
+}
+
+onSearchPosts():void{
+console.log("TOP BAR USER INPUT" +this.postsQuery.value)
+    //this.searchPostEvent.emit(this.postsQuery.value);
+    this.postSearchService.setQuery(this.postsQuery.value);
+    this.router.navigate(["/home/post-search"]);
+
+}
+
 ngOnInit(): void {
 
   this.userIsAuthenticated = this.authService.getIsAuth();
@@ -35,9 +62,8 @@ ngOnInit(): void {
     });
 }
 
-
 ngOnDestroy() {
-  this.authListenerSubs.unsubscribe();
+ 
 }
 
 }
