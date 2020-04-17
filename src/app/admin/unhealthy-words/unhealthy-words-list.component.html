@@ -1,0 +1,8 @@
+<div>
+  <app-add-unhealthy-word
+    (updateParentComponent)="onAddWord($event)"
+  ></app-add-unhealthy-word>
+  <div *ngFor="let word of unhealthyWords">
+    <app-unhealthy-word [word]="word"></app-unhealthy-word>
+  </div>
+</div>

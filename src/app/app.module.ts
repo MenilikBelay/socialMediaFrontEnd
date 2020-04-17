@@ -22,6 +22,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { MatPaginatorModule } from "@angular/material/paginator";
 
 import { AppComponent } from "./app.component";
+import { AdminModule } from "./admin/admin.module";
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { AppComponent } from "./app.component";
     HttpClientModule,
     ReactiveFormsModule,
     MatPaginatorModule,
+    AdminModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
