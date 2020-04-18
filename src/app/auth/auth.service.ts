@@ -10,6 +10,7 @@ export class AuthService {
   private isAuthenticated = false;
   private token: string;
   private userId: string;
+  private isAdmin:boolean;
   private tokenTimer: any;
   private authStatusListener = new Subject<boolean>();
   private baseUrl = "http://localhost:3000/";
@@ -45,7 +46,7 @@ export class AuthService {
   login(userName: string, password: string) {
     const authData = { userName: userName, password: password };
     this.http
-      .post<{ token: string; expiresIn: number; userId: string }>(
+      .post<{ token: string; expiresIn: number; userId: string; isAdmin:boolean }>(
         this.baseUrl + "login",
         authData,
         { headers: { skip: "true" } }
@@ -53,21 +54,28 @@ export class AuthService {
       .subscribe((response) => {
         const token = response.token;
         const userId = response.userId;
-       // console.log(response.userId);
+        const isAdmin = response.isAdmin;
         this.token = token;
         if (token) {
           const expiresInDuration = response.expiresIn;
           this.setAuthTimer(expiresInDuration);
           this.isAuthenticated = true;
           this.userId = response.userId;
+          this.isAdmin = response.isAdmin;
+
           this.authStatusListener.next(true);
           const now = new Date();
           const expirationDate = new Date(
             now.getTime() + expiresInDuration * 1000
           );
           // console.log(expirationDate);
-          this.saveAuthData(token, expirationDate,userId); 
-          this.router.navigate(["/home"]);
+          
+          this.saveAuthData(token, expirationDate,userId,isAdmin); 
+
+          if(response.isAdmin)
+            this.router.navigate(["/admin/unhealthy-words"]);
+          else
+            this.router.navigate(["/home"]);
         }
       });
   }
@@ -99,37 +107,43 @@ export class AuthService {
   }
 
   private setAuthTimer(duration: number) {
-    console.log("Setting timer: " + duration);
+   // console.log("Setting timer: " + duration);
     this.tokenTimer = setTimeout(() => {
       this.logout();
     }, duration * 1000); 
   }
 
   //STORE THE TOKEN TO LOCAL STORAGE
-  private saveAuthData(token: string, expirationDate: Date, userId) {
+  private saveAuthData(token: string, expirationDate: Date, userId,isAdmin) {
     localStorage.setItem("token", token);
     localStorage.setItem("expiration", expirationDate.toISOString());
     localStorage.setItem("userId", userId);
+    localStorage.setItem("isAdmin", isAdmin);
+
   }
 
   private clearAuthData() {
     localStorage.removeItem("token");
     localStorage.removeItem("expiration");
     localStorage.removeItem("userId");
+    localStorage.removeItem("isAdmin");
+
   }
 
   private getAuthData() {
     const token = localStorage.getItem("token");
     const expirationDate = localStorage.getItem("expiration");
     const userId = localStorage.getItem("userId");
+    const isAdmin = localStorage.getItem("isAdmin");
 
-    if (!token || !expirationDate || !userId) {
+    if (!token || !expirationDate || !userId ) {
       return;
     }
     return {
       token: token,
       expirationDate: new Date(expirationDate),
       userId: userId,
+      isAdmin: isAdmin,
     };
   }
 

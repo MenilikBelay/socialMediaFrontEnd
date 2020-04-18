@@ -7,7 +7,9 @@ import { ChildParentCommunicationProtocol } from "src/app/shared/child-parent-co
 @Component({
   selector: "app-unhealthy-words-list",
   templateUrl: "./unhealthy-words-list.component.html",
-  styleUrls: ["./unhealthy-words-list.component.css"],
+  styleUrls: ["./unhealthy-words-list.component.css",'../../../css/color.css',
+  '../../../css/responsive.css', '../../../css/style.css',
+  '../../../css/strip.css'],
 })
 export class UnhealthyWordsListComponent implements OnInit {
   unhealthyWords: UnhealthyWord[];
@@ -23,6 +25,7 @@ export class UnhealthyWordsListComponent implements OnInit {
 
   onAddWord(event: ChildParentCommunicationProtocol<UnhealthyWord>) {
     // if status is -1, error message. If status is 1, add word to unhealthyWords and display success
+    console.log(event.payload);
     if (event.status === 1) {
       this.unhealthyWords.push(event.payload);
     } else {
