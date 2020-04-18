@@ -52,6 +52,15 @@ console.log("TOP BAR USER INPUT" +this.postsQuery.value)
 
 }
 
+onContact(event):void{
+  event.preventDefault(); // Prevents browser following the link
+  this.router.navigate(["/home/contact"]);
+}
+onAboutUs(event){
+  event.preventDefault(); // Prevents browser following the link
+  this.router.navigate(["/home/abouts-us"]);
+}
+
 ngOnInit(): void {
 
   this.userIsAuthenticated = this.authService.getIsAuth();

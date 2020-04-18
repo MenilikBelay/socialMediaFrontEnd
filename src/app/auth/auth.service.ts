@@ -73,7 +73,7 @@ export class AuthService {
           this.saveAuthData(token, expirationDate,userId,isAdmin); 
 
           if(response.isAdmin)
-            this.router.navigate(["/admin/unhealthy-words"]);
+            this.router.navigate(["/admin"]);
           else
             this.router.navigate(["/home"]);
         }
