@@ -2,20 +2,27 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Subject } from "rxjs";
-
+import { SwPush } from "@angular/service-worker";
+import { VAPID_PUBLIC_KEY } from "../shared/vapid-public-key";
 import { AuthData } from "./auth-data.model";
+import { PushMessageService } from "../push/push-message.service";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
   private isAuthenticated = false;
   private token: string;
   private userId: string;
-  private isAdmin:boolean;
+  private isAdmin: boolean;
   private tokenTimer: any;
   private authStatusListener = new Subject<boolean>();
   private baseUrl = "http://localhost:3000/";
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private swPush: SwPush,
+    private pushMessage: PushMessageService
+  ) {}
 
   getToken() {
     return this.token;
@@ -34,10 +41,12 @@ export class AuthService {
   createUser(authData: AuthData) {
     // console.log(authData);
     this.http
-      .post(this.baseUrl+ "users/add-user", authData,{headers:{skip:"true"}})
-      .subscribe(response => {
+      .post(this.baseUrl + "users/add-user", authData, {
+        headers: { skip: "true" },
+      })
+      .subscribe((response) => {
         //console.log(response);
-        this.router.navigate(['/home']);
+        this.router.navigate(["/home"]);
       });
   }
   //this.http.get(url, {headers:{skip:"true"});
@@ -46,11 +55,12 @@ export class AuthService {
   login(userName: string, password: string) {
     const authData = { userName: userName, password: password };
     this.http
-      .post<{ token: string; expiresIn: number; userId: string; isAdmin:boolean }>(
-        this.baseUrl + "login",
-        authData,
-        { headers: { skip: "true" } }
-      )
+      .post<{
+        token: string;
+        expiresIn: number;
+        userId: string;
+        isAdmin: boolean;
+      }>(this.baseUrl + "login", authData, { headers: { skip: "true" } })
       .subscribe((response) => {
         const token = response.token;
         const userId = response.userId;
@@ -69,13 +79,12 @@ export class AuthService {
             now.getTime() + expiresInDuration * 1000
           );
           // console.log(expirationDate);
-          
-          this.saveAuthData(token, expirationDate,userId,isAdmin); 
 
-          if(response.isAdmin)
+          this.saveAuthData(token, expirationDate, userId, isAdmin);
+          this.subscribeToNotifications(); // subscribe push-notification
+          if (response.isAdmin)
             this.router.navigate(["/admin/unhealthy-words"]);
-          else
-            this.router.navigate(["/home"]);
+          else this.router.navigate(["/home"]);
         }
       });
   }
@@ -107,19 +116,18 @@ export class AuthService {
   }
 
   private setAuthTimer(duration: number) {
-   // console.log("Setting timer: " + duration);
+    // console.log("Setting timer: " + duration);
     this.tokenTimer = setTimeout(() => {
       this.logout();
-    }, duration * 1000); 
+    }, duration * 1000);
   }
 
   //STORE THE TOKEN TO LOCAL STORAGE
-  private saveAuthData(token: string, expirationDate: Date, userId,isAdmin) {
+  private saveAuthData(token: string, expirationDate: Date, userId, isAdmin) {
     localStorage.setItem("token", token);
     localStorage.setItem("expiration", expirationDate.toISOString());
     localStorage.setItem("userId", userId);
     localStorage.setItem("isAdmin", isAdmin);
-
   }
 
   private clearAuthData() {
@@ -127,7 +135,6 @@ export class AuthService {
     localStorage.removeItem("expiration");
     localStorage.removeItem("userId");
     localStorage.removeItem("isAdmin");
-
   }
 
   private getAuthData() {
@@ -136,7 +143,7 @@ export class AuthService {
     const userId = localStorage.getItem("userId");
     const isAdmin = localStorage.getItem("isAdmin");
 
-    if (!token || !expirationDate || !userId ) {
+    if (!token || !expirationDate || !userId) {
       return;
     }
     return {
@@ -161,5 +168,20 @@ export class AuthService {
           this.router.navigate(["/"]);
         }
       });
+  }
+
+  /**
+   * Ask for user permission for PUSH NOTIFICATIONS and
+   * send browser info to backend
+   */
+  subscribeToNotifications() {
+    this.swPush
+      .requestSubscription({
+        serverPublicKey: VAPID_PUBLIC_KEY,
+      })
+      .then((sub) => this.pushMessage.addPushSubscriber(sub).subscribe())
+      .catch((err) =>
+        console.error("Could not subscribe to notifications", err)
+      );
   }
 }

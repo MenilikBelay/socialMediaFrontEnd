@@ -24,6 +24,8 @@ import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { Error404Component } from './error404/err404.component';
 import { AdminModule } from "./admin/admin.module";
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,7 @@ import { AdminModule } from "./admin/admin.module";
     MatPaginatorModule,
     CommonModule,
     AdminModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
