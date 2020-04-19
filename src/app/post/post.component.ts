@@ -12,13 +12,15 @@ import { Post } from '../services/post.model';
 export class PostComponent implements OnInit {
   @Input("postId") postId: string;
   @Input("postTime") postTime: Date;
-  @Input("comments") comments: any;
+  @Input("comments") comments: any[];
   @Input("likedBy") likedBy: any;
   @Input("creator") creator: string;
   @Input("content") content: string;
   @Input("imagePath") imagePath: string;
   // @Input("post") post: Post;
-  constructor() {}
+  constructor() {
+    
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {console.log(this.comments);}
 }

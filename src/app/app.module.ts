@@ -23,6 +23,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { AppComponent } from './app.component';
 import { PostComponent } from './post/post.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
+import { CommentDetailComponent } from './comment-detail/comment-detail.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { PostDetailComponent } from './post-detail/post-detail.component';
     LoginComponent,
     EditProfileComponent,
     PostComponent,
-    PostDetailComponent
+    PostDetailComponent,
+    CommentDetailComponent
 
   ],
   imports: [

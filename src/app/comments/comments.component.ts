@@ -20,32 +20,38 @@ declare var $: any;
 })
 export class CommentsComponent implements OnInit {
   @Input('postId') postId: string;
-  @ViewChild('pid', { read: ElementRef }) pid: ElementRef;
+  @Input('comments') comments: any [];
   post: Post;
   isLoading = false;
-  form: FormGroup;
+  
   postid: string;
   content: string;
 
   constructor(public postsService: PostService, public route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.form = new FormGroup({
-      content: new FormControl(null, { validators: [Validators.required] }),
-      postId: new FormControl(null, { validators: [Validators.required] })
-    });
+//     $(".post-comt-box textarea").on("keydown", function(event) {
+
+//     if (event.keyCode == 13) {
+//       var comment = $(this).val();
+//       var parent = $(".showmore").parent("li");
+//       var comment_HTML = '	<li><div class="comet-avatar"></div><div class="we-comment"><div class="coment-head"><h5><a href="time-line.html" title="">{{this.comments.commentedBy.firstName}}</a></h5><span> moments ago</span><a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a></div><p>{{comments.comment}}</p></div></li>';
+//       $(comment_HTML).insertBefore(parent);
+//       $(this).val('');
+// 	}
+// }); 
   }
-  onEnter() {
-    if (this.form.invalid) {
-      return;
-    }
+  onEnter(content: string, postId: string) {
+    // if (this.form.invalid) {
+    //   return;
+    // }
     this.isLoading = true;
-    console.log(this.form.value.content);
-    console.log(this.form.value.postId);
-    console.log(this.postid);
-    this.postsService.addComment(this.form.value.content, this.form.value.postId);
+    console.log(content);
+    console.log(postId);
+    // console.log(this.postid);
+    this.postsService.addComment(content, postId);
     this.isLoading = false;
-    this.form.reset();
+    
   }
   updateId(input: string) {
     this.postid = input;

@@ -4,6 +4,6 @@ export interface Post {
   imagePath: string;
   postTime: Date;
   likedBy: any;
-  comments: any;
+  comments: [];
   creator: any;
 }

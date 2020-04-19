@@ -23,6 +23,7 @@ export class PostService {
         map((postData) => {
           return {
             posts: postData.posts.map((post) => {
+              console.log(post.comments);
               return {
                 content: post.content,
                 id: post._id,
@@ -76,15 +77,14 @@ export class PostService {
   }
   
   addComment(content: string, postId: string) {
-    const commentData = new FormData();
-    commentData.append('content', content);
-    commentData.append('postId', postId);
-    console.log(commentData);
+    // const commentData = new FormData();
+    // commentData.append('content', content);
+    // commentData.append('postId', postId);
+    const commentData={content:content, postId:postId};
+    console.log("comment data",commentData);
     this.http
       .post<{ message: string; post: Post }>(
-        'http://localhost:3000/users/comment-post', // to be checked
-        commentData
-      )
+        'http://localhost:3000/users/comment-post', commentData)
       .subscribe((responseData) => {
         console.log(responseData.message);
         this.router.navigate(['/']); // to be checked

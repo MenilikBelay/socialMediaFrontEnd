@@ -1,21 +1,23 @@
 
 <ul class="we-comet">
-  <li>
+  <li *ngIf="comments.length <= 0">No comments added yet</li>
+  <ng-container *ngIf="comments.length>0">
+  <li *ngFor="let comment of comments">
     <div class="comet-avatar">
       <img src="../images/resources/comet-1.jpg" alt="">
     </div>
     <div class="we-comment">
       <div class="coment-head">
-        <h5><a href="time-line.html" title="">Donald Trump</a></h5>
-        <span>1 week ago</span>
+        <h5><a href="time-line.html" title="">{{comment.commentedBy.firstName}}</a></h5>
+        <span> {{comment.commentTime | date:'medium'}}</span>
         <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
       </div>
-      <p>we are working for the dance and sing songs. this video is very awesome for the
-        youngster. please vote this video and like our channel
-        <i class="em em-smiley"></i>
+      <p> {{comment.comment}}
       </p>
     </div>
+    
   </li>
+</ng-container>
   <li>
     <a href="#" title="" class="showmore underline">more comments</a>
   </li>
@@ -24,26 +26,12 @@
       <img src="../images/resources/comet-1.jpg" alt="">
     </div>
     <div class="post-comt-box">
-      <form [formGroup]="form" *ngIf="!isLoading">
-        <textarea type="text" formControlName="content" placeholder="Post your comment" (keyup.enter)="onEnter()"></textarea>
-        <input type="text"  value="{{postId}}" class="something" formControlName='postId' />
-        <span #pid>{{postId}}</span>
-      </form>
-    </div>
-    <div class="post-comt-box">
-      <form class="commentForm" method="post" action="/comment/add">
-        <textarea id="pcomment" name="pcomment" class="comment" placeholder="Post your comment"></textarea>
-        <div class="add-smiles">
-          <span class="em em-expressionless" title="add icon"></span>
-        </div>
-        <input type="hidden" value="{{postId}}" class="something" name="postId" />
-        <button type="submit"></button>
-      </form>
-    </div>
+       <textarea #content id="pcomment" class="comment" placeholder="Post your comment" (keyup.enter)="onEnter(content.value, pid.value); content.value='';"></textarea>
+        <input type="hidden" #pid  value="{{postId}}" class="something" />
+      </div>
+    
   </li>
 </ul>
-
-
 <script data-cfasync="false" src="https://wpkixx.com/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.min.js"></script>
 <script src="js/script.js"></script>
 <script src="js/map-init.js"></script>
