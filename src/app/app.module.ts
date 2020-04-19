@@ -19,11 +19,16 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './auth/login_singup/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
+import { CommonModule } from '@angular/common';  
 import { AppComponent } from './app.component';
 import { PostComponent } from './post/post.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { CommentDetailComponent } from './comment-detail/comment-detail.component';
+import { Error404Component } from './error404/err404.component';
+import { AdminModule } from "./admin/admin.module";
+import { AboutUsComponent } from './about-contact/aboutus.component';
+import { ContactComponent } from './about-contact/contact.component';
+import { EmailConfirmationComponent } from './emailconfirmation/emailconfirmation.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +46,10 @@ import { CommentDetailComponent } from './comment-detail/comment-detail.componen
     PostComponent,
     PostDetailComponent,
     CommentDetailComponent
-
+    Error404Component,
+    AboutUsComponent,
+    ContactComponent,
+    EmailConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -53,9 +61,13 @@ import { CommentDetailComponent } from './comment-detail/comment-detail.componen
     MatRadioModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    CommonModule,
+    AdminModule,
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
-  bootstrap: [AppComponent]
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

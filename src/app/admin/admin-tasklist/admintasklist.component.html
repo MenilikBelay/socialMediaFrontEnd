@@ -1,0 +1,121 @@
+
+<!--<div class="se-pre-con"></div>-->
+<div class="theme-layout">
+	<div class="postoverlay"></div>
+	<div class="responsive-header">
+		
+	</div><!-- responsive header -->
+	<div class="topbar stick"> 		
+
+		<div class="logo">
+      <a title="" href="" (click)="onHomeClick($event)" ><img src="../../../images/logo5.png" alt=""></a>
+
+    </div>	
+    <span class="welcome"> WELCOME </span>
+	
+	</div><!-- topbar -->
+	
+	
+	<div class="fixed-sidebar right">
+	
+	</div><!-- right sidebar user chat -->
+	
+	<div class="fixed-sidebar left">
+
+	</div><!-- left sidebar menu -->
+		
+	<section>
+		<div class="gap2 gray-bg">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="row merged20" id="page-contents">
+							<div class="col-lg-3">								
+                <aside class="sidebar static">
+                  <div class="widget">
+                    <h4 class="widget-title">Words and User Managment</h4>
+                    <ul    class="naves">    
+                      <li>
+                        <i class="ti-check-box"></i>
+                        <a href="" (click)="onLReviewActivation($event)" >Review Activation Requests</a>
+                      </li>   
+                      <li>
+                        <i class="ti-magnet"></i>
+                        <a href="" (click)="onAddUnhealtyWord($event)">Add Unhealthy Word</a>
+                      </li>
+                      <li>
+                        <i class="ti-trash"></i>
+                        <a href="" (click)="onDeleteUnhealthyWord($event)">Delete Unhealthy Word</a>
+                      </li> 
+                        <li>
+                          <i class="ti-power-off"></i>
+                          <a  href="" (click)="onLogout($event)" >Logout</a>
+                        </li>           
+                    </ul>
+                    
+                  </div><!-- account and word list -->    
+                  <div class="widget">
+                    <h4 class="widget-title">Advertisment Managment</h4>
+                    <ul    class="naves">   
+                      <li>
+                        <i class="ti-shopping-cart"></i>
+                        <a href="" (click)="onCreateAdvert($event)">Create Advertisment</a>
+                      </li> 
+                      <li>
+                        <i class="ti-pin-alt"></i>
+                        <a href="" (click)="onPushAdvert($event)">Push Advertisment</a>
+                      </li>   
+                      <li>
+                        <i class="ti-ruler"></i>
+                        <a href="" (click)="onCreateAddCriteria($event)">Add Push Criteria</a>
+                      </li>
+                      <li>
+                        <i class="ti-filter"></i>
+                        <a href="" (click)="onReviewEnablePost($event)">Review Posts</a>
+                      </li>  
+                    </ul>
+                  </div><!-- admin tasks -->  
+                </aside>
+							</div><!-- sidebar -->
+							<div class="col-lg-6">
+								<div class="central-meta new-pst">
+									<div class="new-postbox">
+                    <router-outlet></router-outlet>
+
+                  <!-- FOR TEST -->
+                      <app-unhealthy-words-list></app-unhealthy-words-list>
+
+
+
+									</div>
+								</div><!-- add post new box -->
+								
+              </div><!-- centerl meta -->
+              
+							<div class="col-lg-3">
+								<aside class="sidebar static right">
+									<div class="widget">
+										<h4 class="widget-title">General Info</h4>	
+										
+									</div><!-- page like widget -->
+									
+								</aside>
+							</div><!-- sidebar -->
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>	
+	</section>
+	
+  <div class="bottombar">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <span class="copyright">© Dagu 2020. All rights reserved.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+	

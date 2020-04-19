@@ -1,11 +1,12 @@
 import { AuthService } from './../auth/auth.service';
 import { ProfileService } from './profile.service';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, NavigationEnd } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
 import { DatePipe, JsonPipe } from '@angular/common';
 import { UserProfile } from './user-data.model';
 import { Router } from "@angular/router";
+import { first } from "rxjs/operators";
 
 @Component({
   selector: 'app-edit-profile',
@@ -16,12 +17,14 @@ import { Router } from "@angular/router";
 })
 export class EditProfileComponent implements OnInit {
 
-
-
 userProfile: UserProfile;
 editForm: FormGroup;
+pipe = new DatePipe('en-US');
+profilePic;
 
-constructor( private formBuilder: FormBuilder, private router: Router, private authService:AuthService, private profileService:ProfileService) {  }
+constructor( private formBuilder: FormBuilder, private router: Router, private authService:AuthService, private profileService:ProfileService) {
+
+  }
  
 
 get address() {
@@ -33,22 +36,22 @@ get address() {
   }
 
 ngOnInit() : void {
-    let userId = window.localStorage.getItem("userId");
-     // let userId = this.authService.getUserId();
+   let userId = window.localStorage.getItem("userId");
+    //let userId = this.authService.getUserId();
     if (!userId) {
-      alert("Invalid action.")
+      alert("Inside edit profile: not logged in.")
       this.router.navigate(['login']);
       return;
     }
     this.editForm = this.formBuilder.group({
-      _id: [''],
+      _id: ['', Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', Validators.required],
       gender: ['', Validators.required],
+      profilePic:['',Validators.required],
       address:this.formBuilder.array([
-          this.formBuilder.group({
-              
+          this.formBuilder.group({              
                 country:[''],
                 state:[''],
                 city:[''],
@@ -59,7 +62,7 @@ ngOnInit() : void {
   
     this.profileService.getUserById(userId)
       .subscribe(data => {
-        console.log("inside profile the user id is: " + data);
+        console.log(data.result);
         delete data.result.followers;
         delete data.result.following;
         delete data.result.userName;
@@ -68,19 +71,31 @@ ngOnInit() : void {
         delete data.result.accountStatus;
         delete data.result.isAdmin;
         delete data.result.unhealthyPostNo;
-
+        
+        console.log("the id is : "+data.result._id)
         this.editForm.setValue(data.result);
       });
   }
 
   onUpdate(){
-    // if(this.editForm.invalid)
-    // return; 
+    if(this.editForm.invalid)
+     return; 
     console.log("UPDATE STARTED: INDIDE COMPONENT"); 
-    this.profileService.updateUser(this.editForm.value);
- 
+    this.profileService.updateUser(this.editForm.value)
+    .pipe(first())
+    .subscribe(    data => {
+      if (data.status === 200) {
+        console.log('User updated successfully.');
+        this.router.navigate(['/']);
+      } else {
+        console.log(data.message);
+      }
+    },
+    error => {
+      console.log(error);
+    }); 
   }
   onCancel(){
 
-  }
+  }  
 }
