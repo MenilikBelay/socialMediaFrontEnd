@@ -24,6 +24,9 @@ import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { Error404Component } from './error404/err404.component';
 import { AdminModule } from "./admin/admin.module";
+import { AboutUsComponent } from './about-contact/aboutus.component';
+import { ContactComponent } from './about-contact/contact.component';
+import { EmailConfirmationComponent } from './emailconfirmation/emailconfirmation.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,10 @@ import { AdminModule } from "./admin/admin.module";
     HomeComponent,
     LoginComponent,
     EditProfileComponent,
-    Error404Component
+    Error404Component,
+    AboutUsComponent,
+    ContactComponent,
+    EmailConfirmationComponent
   ],
   imports: [
     BrowserModule,
