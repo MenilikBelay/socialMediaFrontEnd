@@ -77,11 +77,7 @@ export class PostService {
   }
   
   addComment(content: string, postId: string) {
-    // const commentData = new FormData();
-    // commentData.append('content', content);
-    // commentData.append('postId', postId);
     const commentData={content:content, postId:postId};
-    console.log("comment data",commentData);
     this.http
       .post<{ message: string; post: Post }>(
         'http://localhost:3000/users/comment-post', commentData)
