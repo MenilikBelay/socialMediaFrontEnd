@@ -34,13 +34,13 @@ export class AuthService {
   createUser(authData: AuthData) {
     // console.log(authData);
     this.http
-      .post(this.baseUrl+ "users/add-user", authData,{headers:{skip:"true"}})
+      .post(this.baseUrl + 'users/add-user', authData, { headers: { skip: 'true' } })
       .subscribe(response => {
         //console.log(response);
         this.router.navigate(['/home']);
       });
   }
-  //this.http.get(url, {headers:{skip:"true"});
+  // this.http.get(url, {headers:{skip:"true"});
 
   // LOGIN
   login(userName: string, password: string) {
@@ -119,7 +119,6 @@ export class AuthService {
     localStorage.setItem("expiration", expirationDate.toISOString());
     localStorage.setItem("userId", userId);
     localStorage.setItem("isAdmin", isAdmin);
-
   }
 
   private clearAuthData() {
@@ -127,7 +126,6 @@ export class AuthService {
     localStorage.removeItem("expiration");
     localStorage.removeItem("userId");
     localStorage.removeItem("isAdmin");
-
   }
 
   private getAuthData() {
