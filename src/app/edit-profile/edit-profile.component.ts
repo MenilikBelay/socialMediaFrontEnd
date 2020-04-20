@@ -20,16 +20,27 @@ export class EditProfileComponent implements OnInit {
 userProfile: UserProfile;
 editForm: FormGroup;
 pipe = new DatePipe('en-US');
-profilePic;
 
-constructor( private formBuilder: FormBuilder, private router: Router, private authService:AuthService, private profileService:ProfileService) {
+      // _id
+      // firstName;
+      // lastName;
+      // email;
+      // gender; 
+      // profilePic;
+      // user;
+      //address;
 
-  }
+constructor( private formBuilder: FormBuilder, private router: Router, private authService:AuthService, private profileService:ProfileService) {  }
  
 
-get address() {
+  get address() {
     return (this.editForm.get('address') as FormArray).controls;
   }
+
+  // set address(address) {
+  //  // this.address = address;
+  // }
+
 
   getControls() {
     return (this.editForm.get('address') as FormArray).controls;
@@ -62,7 +73,6 @@ ngOnInit() : void {
   
     this.profileService.getUserById(userId)
       .subscribe(data => {
-        console.log(data.result);
         delete data.result.followers;
         delete data.result.following;
         delete data.result.userName;
@@ -71,22 +81,48 @@ ngOnInit() : void {
         delete data.result.accountStatus;
         delete data.result.isAdmin;
         delete data.result.unhealthyPostNo;
+        delete data.result.isConfirmed;
+        console.log("insdie edit profile : "+data.result);
+
+      //    this.user = {
+      //   _id : data.result._id,
+      //   firstName : data.result.firstName,
+      //   lastName :data.result.lastName,
+      //   email:data.result.email,
+      //   gender:data.result.gender, 
+      //   profilePic:data.result.address,
+      //   address:data.result.address,
+      // }
         
-        console.log("the id is : "+data.result._id)
-        this.editForm.setValue(data.result);
+        console.log("the account id is : "+data.result._id);
+        this.editForm.setValue(data.result)
+
+        // this.editForm.setValue({
+        //   //_id:this._id,
+        //   firstName:this.firstName,
+        //   lastName:this.lastName,
+        //   email:this.email,
+        //   gender:this.gender,
+        //   profilePic:this.profilePic,
+        //   address : this.address
+
+        // });
       });
   }
 
   onUpdate(){
-    if(this.editForm.invalid)
-     return; 
     console.log("UPDATE STARTED: INDIDE COMPONENT"); 
+
+    // if(this.editForm.invalid)
+    //  return; 
+    console.log("UPDATE STARTED: Form values"); 
+    console.log(this.editForm.value);
     this.profileService.updateUser(this.editForm.value)
     .pipe(first())
     .subscribe(    data => {
       if (data.status === 200) {
         console.log('User updated successfully.');
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       } else {
         console.log(data.message);
       }
@@ -96,6 +132,6 @@ ngOnInit() : void {
     }); 
   }
   onCancel(){
-
+    this.router.navigate(["/home"]);
   }  
 }

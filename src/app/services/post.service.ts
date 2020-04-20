@@ -74,7 +74,7 @@ export class PostService {
       )
       .subscribe((responseData) => {
         console.log(responseData.message);
-        this.router.navigate(["/"]); // to be checked
+        this.router.navigate(['/home']); // to be checked
         return true;
       });
   }
@@ -88,7 +88,7 @@ export class PostService {
       )
       .subscribe((responseData) => {
         console.log(responseData.message);
-        this.router.navigate(["/"]); // to be checked
+        this.router.navigate(['/home']); // to be checked
         return true;
       });
   }
@@ -102,7 +102,7 @@ export class PostService {
       )
       .subscribe((responseData) => {
         console.log("success message",responseData.message);
-        this.router.navigate(["/"]); // to be checked
+        this.router.navigate(["/home"]); // to be checked
         return true;
       });
   }
