@@ -7,9 +7,13 @@ import { ChildParentCommunicationProtocol } from "src/app/shared/child-parent-co
 @Component({
   selector: "app-unhealthy-words-list",
   templateUrl: "./unhealthy-words-list.component.html",
-  styleUrls: ["./unhealthy-words-list.component.css",'../../../css/color.css',
-  '../../../css/responsive.css', '../../../css/style.css',
-  '../../../css/strip.css'],
+  styleUrls: [
+    "./unhealthy-words-list.component.css",
+    "../../../css/color.css",
+    "../../../css/responsive.css",
+    "../../../css/style.css",
+    "../../../css/strip.css",
+  ],
 })
 export class UnhealthyWordsListComponent implements OnInit {
   unhealthyWords: UnhealthyWord[];
@@ -31,5 +35,15 @@ export class UnhealthyWordsListComponent implements OnInit {
     } else {
       console.log("onAddWord: ", event);
     }
+  }
+
+  onDeleteHandler(event: any) {
+    let _index = -1;
+    this.unhealthyWords.forEach((word, index) => {
+      if (word._id === event) {
+        _index = index;
+      }
+    });
+    this.unhealthyWords.splice(_index, 1);
   }
 }
