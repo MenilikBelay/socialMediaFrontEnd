@@ -26,6 +26,8 @@ import { PostDetailComponent } from './post-detail/post-detail.component';
 import { CommentDetailComponent } from './comment-detail/comment-detail.component';
 import { Error404Component } from './error404/err404.component';
 import { AdminModule } from "./admin/admin.module";
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 import { AboutUsComponent } from './about-contact/aboutus.component';
 import { ContactComponent } from './about-contact/contact.component';
 import { EmailConfirmationComponent } from './emailconfirmation/emailconfirmation.component';
@@ -64,6 +66,7 @@ import { EmailConfirmationComponent } from './emailconfirmation/emailconfirmatio
     MatPaginatorModule,
     CommonModule,
     AdminModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

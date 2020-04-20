@@ -1,5 +1,27 @@
 # Mwaproject
 
+## Push Notification
+
+For the purpose of push notification:
+
+1. I have modified `angular.json`
+
+```
+    "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "15mb"    // was 5mb
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "2mb" // was 10kb
+                }
+```
+
+## Main
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.0.
 
 ## Development server

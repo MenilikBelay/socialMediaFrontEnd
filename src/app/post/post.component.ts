@@ -13,7 +13,7 @@ export class PostComponent implements OnInit {
   @Input("postId") postId: string;
   @Input("postTime") postTime: Date;
   @Input("comments") comments: any[];
-  @Input("likedBy") likedBy: any;
+  @Input("likedBy") likedBy: any[];
   @Input("creator") creator: string;
   @Input("content") content: string;
   @Input("imagePath") imagePath: string;
