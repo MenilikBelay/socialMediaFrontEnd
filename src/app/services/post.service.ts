@@ -16,18 +16,22 @@ export class PostService {
   getPosts(postsPerPage: number, currentPage: number) {
     const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
     this.http
-      .get<{ message: string; posts: any; maxPosts: number }>(
-        'http://localhost:3000/posts' + queryParams
+      .get<{ posts: any; currentPage: any; totalPages: number; maxPosts: number }>(
+        'http://localhost:3000/users/get-posts' + queryParams
       )
       .pipe(
         map((postData) => {
           return {
             posts: postData.posts.map((post) => {
+              console.log(post.comments);
               return {
                 content: post.content,
                 id: post._id,
                 imagePath: post.imagePath,
-                creator: post.creator,
+                creator: post.owner,
+                postTime: post.postTime,
+                comments: post.comments,
+                likedBy: post.likedBy
               };
             }),
             maxPosts: postData.maxPosts,
@@ -62,37 +66,51 @@ export class PostService {
     postData.append('image', image);
     this.http
       .post<{ message: string; post: Post }>(
-        'http://localhost:3000/posts',          // to be checked
+        'http://localhost:3000/users/add-post', // to be checked
         postData
       )
       .subscribe((responseData) => {
-        this.router.navigate(['/']);       // to be checked
+        console.log(responseData.message);
+        this.router.navigate(['/']); // to be checked
+        return true;
+      });
+  }
+  
+  addComment(content: string, postId: string) {
+    const commentData={content:content, postId:postId};
+    this.http
+      .post<{ message: string; post: Post }>(
+        'http://localhost:3000/users/comment-post', commentData)
+      .subscribe((responseData) => {
+        console.log(responseData.message);
+        this.router.navigate(['/']); // to be checked
+        return true;
       });
   }
 
-  // updatePost(id: string, title: string, content: string, image: File | string) {
+  // updatePost(id: string, content: string, image: File | string) {
   //   let postData: Post | FormData;
   //   if (typeof image === 'object') {
   //     postData = new FormData();
   //     postData.append('id', id);
   //     postData.append('content', content);
-  //     postData.append('image', image, title);
+  //     postData.append('image', image);
   //   } else {
   //     postData = {
-  //       id: id,
-  //       content: content,
+  //       id,
+  //       content,
   //       imagePath: image,
   //       creator: null,
   //     };
   //   }
   //   this.http
-  //     .put('http://localhost:3000/api/posts/' + id, postData)
+  //     .put('http://localhost:3000/users/posts/' + id, postData)
   //     .subscribe((response) => {
   //       this.router.navigate(['/']);
   //     });
   // }
 
-  // deletePost(postId: string) {
-  //   return this.http.delete('http://localhost:3000/api/posts/' + postId);
-  // }
+  deletePost(postId: string) {
+    return this.http.delete('http://localhost:3000/users/posts/' + postId);
+  }
 }

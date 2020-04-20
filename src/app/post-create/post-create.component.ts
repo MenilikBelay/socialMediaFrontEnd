@@ -25,7 +25,7 @@ export class PostCreateComponent implements OnInit {
   isLoading = false;
   form: FormGroup;
   imagePreview: string;
-  // private mode = 'create';
+  private mode = 'create';
   private postId: string;
 
   constructor(
@@ -53,9 +53,9 @@ export class PostCreateComponent implements OnInit {
     //         content: postData.content,
     //         imagePath: postData.imagePath,
     //         creator: postData.creator,
+    //         postTime: postData.postTime,
     //       };
     //       this.form.setValue({
-    //         title: this.post.title,
     //         content: this.post.content,
     //         image: this.post.imagePath,
     //       });
@@ -83,19 +83,21 @@ export class PostCreateComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    this.postsService.addPost(this.form.value.content, this.form.value.image);
-    // if (this.mode === 'create') {
-    //   this.postsService.addPost(
-    //     this.form.value.content,
-    //     this.form.value.image
-    //   );
-    // } else {
+    if (this.mode === 'create') {
+        this.postsService.addPost(
+        this.form.value.content,
+        this.form.value.image
+        );
+    }
+    // else {
     //   this.postsService.updatePost(
     //     this.postId,
     //     this.form.value.content,
     //     this.form.value.image
     //   );
     // }
+    
+    this.isLoading = false;
     this.form.reset();
   }
 }

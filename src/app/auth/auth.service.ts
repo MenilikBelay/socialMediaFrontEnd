@@ -41,15 +41,13 @@ export class AuthService {
   createUser(authData: AuthData) {
     // console.log(authData);
     this.http
-      .post(this.baseUrl + "users/add-user", authData, {
-        headers: { skip: "true" },
-      })
-      .subscribe((response) => {
+      .post(this.baseUrl + 'users/add-user', authData, { headers: { skip: 'true' } })
+      .subscribe(response => {
         //console.log(response);
         this.router.navigate(["/home"]);
       });
   }
-  //this.http.get(url, {headers:{skip:"true"});
+  // this.http.get(url, {headers:{skip:"true"});
 
   // LOGIN
   login(userName: string, password: string) {
@@ -79,12 +77,10 @@ export class AuthService {
             now.getTime() + expiresInDuration * 1000
           );
           // console.log(expirationDate);
-
-          this.saveAuthData(token, expirationDate, userId, isAdmin);
-          this.subscribeToNotifications(); // subscribe push-notification
-          if (response.isAdmin)
-            this.router.navigate(["/admin/unhealthy-words"]);
-          else this.router.navigate(["/home"]);
+          if(response.isAdmin)
+            this.router.navigate(["/admin"]);
+          else
+            this.router.navigate(["/home"]);
         }
       });
   }
