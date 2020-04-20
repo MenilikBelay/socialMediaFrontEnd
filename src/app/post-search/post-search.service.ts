@@ -21,9 +21,9 @@ export class PostSearchService {
     constructor(private http: HttpClient, private authService:AuthService ) { }
     baseUrl: string = 'http://localhost:3000/users/get-posts/search';  
 
-    getPostsWithQuery(query,id):Observable<ApiResponse>{
+    getPostsWithQuery(id):Observable<ApiResponse>{
 
-       const queryParam =  `?filter=${query}&id=${id}`;
+       const queryParam =  `?filter=${this.query}&id=${id}`;
       // const id = this.authService.getUserId();
          console.log("THE SEARCH QUERY IS: "+this.baseUrl +queryParam); 
        return this.http.get (this.baseUrl+queryParam).pipe(map((response: any) => response));

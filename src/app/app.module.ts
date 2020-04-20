@@ -45,7 +45,7 @@ import { EmailConfirmationComponent } from './emailconfirmation/emailconfirmatio
     EditProfileComponent,
     PostComponent,
     PostDetailComponent,
-    CommentDetailComponent
+    CommentDetailComponent,
     Error404Component,
     AboutUsComponent,
     ContactComponent,

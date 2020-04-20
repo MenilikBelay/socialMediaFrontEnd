@@ -41,11 +41,11 @@ ngOnInit(): void {
     this.searchPosts(this.postsQuery);
     
 }
-
 searchPosts(postsQuery) {
     console.log("INSIDE POST SEARCH, QUERY WORD :"+ postsQuery);
+    this.postsQuery = this.postSearchService.setQuery(postsQuery);
 
-    this.postSearchService.getPostsWithQuery(postsQuery, this.userId)
+    this.postSearchService.getPostsWithQuery(this.userId)
         .subscribe(data => {
           console.log(data.result)
             this.posts = data.result;
