@@ -82,8 +82,7 @@ export class AuthService {
 
           this.saveAuthData(token, expirationDate, userId, isAdmin);
           this.subscribeToNotifications(); // subscribe push-notification
-          if (response.isAdmin)
-            this.router.navigate(["/admin/unhealthy-words"]);
+          if (response.isAdmin) this.router.navigate(["/admin"]);
           else this.router.navigate(["/home"]);
         }
       });

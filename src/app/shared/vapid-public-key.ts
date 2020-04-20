@@ -3,4 +3,4 @@
  */
 
 export const VAPID_PUBLIC_KEY =
-  "BBZTBD3P4e3ddGecHDkbJcdNnAHZj2Gn0TIMTWMcJRDarZebYPY5NV1mUVeejm2FuM6pGugtViYNCJPw9ZUukVw";
+  "BMhTUkqyjeiXSv0BYTOOPk1TB1cpIpaKhNv5W5BZuxksjfgo9JjQTEeqAC5PqHUoPSPYec7lbnjwOzXfnQHz55s";

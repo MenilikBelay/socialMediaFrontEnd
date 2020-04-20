@@ -26,6 +26,7 @@ import { Error404Component } from './error404/err404.component';
 import { AdminModule } from "./admin/admin.module";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { NotificationComponent } from './notification/notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { environment } from '../environments/environment';
     HomeComponent,
     LoginComponent,
     EditProfileComponent,
-    Error404Component
+    Error404Component,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,

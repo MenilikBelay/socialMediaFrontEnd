@@ -13,3 +13,5 @@ export const deleteUnhealthywordsURL = (id: string): string =>
 export const createUnhealthyWord = `${ADMIN_URL}unhealthyword`;
 
 export const postPushSubscriptionObjectURL = `${LOGIN_URL}pushSubscriptionObject`;
+
+export const getNotificationsURL = `${BASE_URL}notifications`;
