@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { UnhealthyWord } from "./unhealthyWord";
 import { UnhealthyService } from "src/app/services/admin/unhealthy.service";
 
@@ -9,13 +9,13 @@ import { UnhealthyService } from "src/app/services/admin/unhealthy.service";
 })
 export class UnhealthyWordComponent {
   @Input() word: UnhealthyWord;
-
+  @Output() x: EventEmitter<string> = new EventEmitter<string>();
   constructor(private unhealthyService: UnhealthyService) {}
 
   onDelete() {
     // delete the word
     this.unhealthyService.deleteUnhealthyWord(this.word._id).subscribe(
-      (data: any) => console.log(data), //TODO display success
+      (data: any) => this.x.emit(this.word._id), //TODO display success
       (error) => console.log(error) //TODO display failure
     );
   }
